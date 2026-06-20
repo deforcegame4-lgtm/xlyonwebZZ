@@ -90,6 +90,13 @@
     align-items: center;
     width: 100%;
     max-width: 400px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .page.hide {
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
   }
 
   .brand { text-align: center; margin-bottom: 28px; }
@@ -375,6 +382,194 @@
     .brand-title { font-size: 34px; }
     .card { padding: 26px 20px; }
   }
+
+  /* ---------- Glitch transition ---------- */
+  .glitch-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 110;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .glitch-overlay.run {
+    animation: glitchFlicker 0.7s steps(2, end);
+  }
+  @keyframes glitchFlicker {
+    0% { opacity: 1; }
+    10% { opacity: 0; }
+    18% { opacity: 1; }
+    28% { opacity: 0.15; }
+    38% { opacity: 1; }
+    50% { opacity: 0; }
+    62% { opacity: 0.8; }
+    72% { opacity: 0; }
+    85% { opacity: 0.4; }
+    100% { opacity: 0; }
+  }
+
+  .glitch-bar {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 111;
+    pointer-events: none;
+    opacity: 0;
+    mix-blend-mode: screen;
+  }
+  .glitch-bar.run { animation: glitchBar 0.7s steps(1, end); }
+  .glitch-bar:nth-child(1) { top: 18%; background: var(--cyan); animation-delay: 0.05s; }
+  .glitch-bar:nth-child(2) { top: 42%; background: var(--pink); animation-delay: 0.15s; height: 5px; }
+  .glitch-bar:nth-child(3) { top: 67%; background: var(--violet); animation-delay: 0.3s; }
+  .glitch-bar:nth-child(4) { top: 80%; background: var(--cyan); animation-delay: 0.45s; height: 2px; }
+
+  @keyframes glitchBar {
+    0% { opacity: 0; transform: translateX(0); }
+    10% { opacity: 1; transform: translateX(-40px); }
+    20% { opacity: 0; transform: translateX(30px); }
+    30% { opacity: 1; transform: translateX(-15px); }
+    40% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* ---------- Reward screen ---------- */
+  .reward-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 24px;
+    background: radial-gradient(ellipse at 50% 30%, #0d1b3e 0%, #050813 55%, #000000 100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .reward-screen.show { opacity: 1; pointer-events: auto; }
+
+  .reward-photo-wrap {
+    width: min(86vw, 320px);
+    aspect-ratio: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(10px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 60px rgba(6, 182, 212, 0.25);
+  }
+  .reward-photo-wrap.show {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  .reward-photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .reward-caption {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 19px;
+    text-align: center;
+    background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 6s linear infinite;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reward-caption.show { opacity: 1; transform: translateY(0); }
+
+  .music-player {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px 10px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .music-player.show { opacity: 1; transform: translateY(0); }
+
+  .play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    color: #05060a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .play-btn svg { width: 16px; height: 16px; }
+  .play-btn .pause-icon { display: none; }
+  .play-btn.playing .play-icon { display: none; }
+  .play-btn.playing .pause-icon { display: block; }
+
+  .eq-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 18px;
+  }
+  .eq-bars span {
+    width: 3px;
+    background: var(--cyan);
+    border-radius: 2px;
+    height: 5px;
+    animation: eqBounce 0.9s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .eq-bars span:nth-child(2) { background: var(--violet); animation-delay: 0.15s; }
+  .eq-bars span:nth-child(3) { background: var(--pink); animation-delay: 0.3s; }
+  .music-player.playing .eq-bars span { animation-play-state: running; }
+
+  @keyframes eqBounce {
+    0%, 100% { height: 5px; }
+    50% { height: 18px; }
+  }
+
+  .music-label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .back-btn {
+    margin-top: 28px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 12.5px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .back-btn:hover { color: var(--text); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glitch-overlay.run, .glitch-bar.run { animation: none !important; }
+  }
 </style>
 </head>
 <body>
@@ -436,6 +631,35 @@
     <p class="footer-text">XylonWebz © 2026 — key diverifikasi langsung via Telegram</p>
   </main>
 
+  <div class="glitch-overlay" id="glitch-overlay"></div>
+  <div class="glitch-bar"></div>
+  <div class="glitch-bar"></div>
+  <div class="glitch-bar"></div>
+  <div class="glitch-bar"></div>
+
+  <div class="reward-screen" id="reward-screen">
+    <div class="reward-photo-wrap" id="reward-photo-wrap">
+      <img src="https://files.catbox.moe/qwmypk.jpg" alt="Access granted" />
+    </div>
+    <p class="reward-caption" id="reward-caption">ACCESS GRANTED</p>
+
+    <div class="music-player" id="music-player">
+      <button type="button" class="play-btn" id="play-btn" aria-label="Play musik">
+        <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      </button>
+      <div class="eq-bars"><span></span><span></span><span></span></div>
+      <span class="music-label">XylonWebz OST</span>
+    </div>
+
+    <button type="button" class="back-btn" id="back-btn">← Balik ke Login</button>
+
+    <!-- GANTI link di bawah ini sama link mp3 langsung (misal dari catbox.moe) -->
+    <audio id="bg-audio" loop preload="none">
+      <source src="https://files.catbox.moe/qeqnpo.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+
   <script>
     const form = document.getElementById('login-form');
     const card = document.getElementById('card');
@@ -444,6 +668,16 @@
     const togglePass = document.getElementById('toggle-pass');
     const passwordInput = document.getElementById('password');
     const notifContainer = document.getElementById('notif-container');
+    const page = document.querySelector('.page');
+    const glitchOverlay = document.getElementById('glitch-overlay');
+    const glitchBars = document.querySelectorAll('.glitch-bar');
+    const rewardScreen = document.getElementById('reward-screen');
+    const rewardPhotoWrap = document.getElementById('reward-photo-wrap');
+    const rewardCaption = document.getElementById('reward-caption');
+    const musicPlayer = document.getElementById('music-player');
+    const playBtn = document.getElementById('play-btn');
+    const bgAudio = document.getElementById('bg-audio');
+    const backBtn = document.getElementById('back-btn');
 
     const COOLDOWN_MS = 5000;
 
@@ -497,6 +731,51 @@
       passwordInput.type = isHidden ? 'text' : 'password';
     });
 
+    function unlockReward(username) {
+      rewardCaption.textContent = `WELCOME, ${username.toUpperCase()}`;
+
+      setTimeout(() => {
+        page.classList.add('hide');
+        glitchOverlay.classList.add('run');
+        glitchBars.forEach((bar) => bar.classList.add('run'));
+
+        setTimeout(() => {
+          glitchOverlay.classList.remove('run');
+          glitchBars.forEach((bar) => bar.classList.remove('run'));
+          rewardScreen.classList.add('show');
+
+          setTimeout(() => rewardPhotoWrap.classList.add('show'), 100);
+          setTimeout(() => rewardCaption.classList.add('show'), 500);
+          setTimeout(() => musicPlayer.classList.add('show'), 800);
+        }, 700);
+      }, 900);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (bgAudio.paused) {
+        bgAudio.play().catch(() => {});
+        playBtn.classList.add('playing');
+        musicPlayer.classList.add('playing');
+      } else {
+        bgAudio.pause();
+        playBtn.classList.remove('playing');
+        musicPlayer.classList.remove('playing');
+      }
+    });
+
+    backBtn.addEventListener('click', () => {
+      bgAudio.pause();
+      playBtn.classList.remove('playing');
+      musicPlayer.classList.remove('playing');
+      rewardScreen.classList.remove('show');
+      rewardPhotoWrap.classList.remove('show');
+      rewardCaption.classList.remove('show');
+      musicPlayer.classList.remove('show');
+      page.classList.remove('hide');
+      loginBtnText.textContent = 'Login';
+      loginBtn.disabled = false;
+    });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (loginBtn.disabled) return;
@@ -517,8 +796,7 @@
 
         if (data.status === 'success') {
           showNotification('Berhasil!', `Welcome ${data.username}`, 'success');
-          loginBtnText.textContent = 'Login';
-          loginBtn.disabled = false;
+          unlockReward(data.username);
         } else if (data.status === 'expired') {
           showNotification('Masa Telah Habis!', 'Tekan Get Akses Untuk Mendapatkan Key Baru', 'warning');
           shakeCard();
