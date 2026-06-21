@@ -491,26 +491,73 @@
   }
   .reward-caption.show { opacity: 1; transform: translateY(0); }
 
-  .music-player {
-    margin-top: 24px;
+  /* ---------- Music search dock ---------- */
+  .music-dock {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 26px;
     display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 10px 18px 10px 10px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    flex-direction: column;
+    gap: 9px;
+    position: relative;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .music-player.show { opacity: 1; transform: translateY(0); }
+  .music-dock.show { opacity: 1; transform: translateY(0); }
 
-  .play-btn {
+  .now-playing {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 0px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 14px;
+    transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.45s ease, border-width 0.3s ease;
+  }
+  .now-playing.show {
+    max-height: 70px;
+    opacity: 1;
+    padding: 9px 14px;
+    border-width: 1px;
+  }
+
+  .np-artwork {
     width: 40px;
     height: 40px;
+    border-radius: 9px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--surface-2);
+  }
+
+  .np-info { flex: 1; min-width: 0; }
+  .np-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .np-artist {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+  }
+
+  .play-btn {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     border: none;
     background: linear-gradient(135deg, var(--cyan), var(--violet));
@@ -521,7 +568,7 @@
     cursor: pointer;
     flex-shrink: 0;
   }
-  .play-btn svg { width: 16px; height: 16px; }
+  .play-btn svg { width: 15px; height: 15px; }
   .play-btn .pause-icon { display: none; }
   .play-btn.playing .play-icon { display: none; }
   .play-btn.playing .pause-icon { display: block; }
@@ -530,30 +577,130 @@
     display: flex;
     align-items: flex-end;
     gap: 3px;
-    height: 18px;
+    height: 16px;
+    flex-shrink: 0;
   }
   .eq-bars span {
     width: 3px;
     background: var(--cyan);
     border-radius: 2px;
-    height: 5px;
+    height: 4px;
     animation: eqBounce 0.9s ease-in-out infinite;
     animation-play-state: paused;
   }
   .eq-bars span:nth-child(2) { background: var(--violet); animation-delay: 0.15s; }
   .eq-bars span:nth-child(3) { background: var(--pink); animation-delay: 0.3s; }
-  .music-player.playing .eq-bars span { animation-play-state: running; }
+  .now-playing.playing .eq-bars span { animation-play-state: running; }
 
   @keyframes eqBounce {
-    0%, 100% { height: 5px; }
-    50% { height: 18px; }
+    0%, 100% { height: 4px; }
+    50% { height: 16px; }
   }
 
-  .music-label {
+  .search-wrap { position: relative; }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .search-bar.lifted {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+  }
+  .search-bar svg { color: var(--muted); flex-shrink: 0; }
+  .search-bar input {
+    flex: 1;
+    min-width: 0;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text);
     font-family: var(--font-mono);
+    font-size: 12.5px;
+  }
+  .search-bar input::placeholder { color: #5d637a; }
+
+  .search-spinner {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-top-color: var(--cyan);
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .search-results {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    max-height: 230px;
+    overflow-y: auto;
+    border-radius: 16px;
+    background: rgba(15, 17, 26, 0.94);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 5;
+  }
+  .search-results.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .search-result-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .search-result-row:hover, .search-result-row:active { background: rgba(255,255,255,0.06); }
+  .search-result-row img {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--surface-2);
+  }
+  .search-result-info { flex: 1; min-width: 0; }
+  .search-result-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .search-result-artist {
+    font-size: 10.5px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .search-empty {
+    padding: 14px;
     font-size: 11.5px;
     color: var(--muted);
-    letter-spacing: 0.5px;
+    text-align: center;
   }
 
   .back-btn {
@@ -619,9 +766,9 @@
           </button>
         </form>
 
-        <div class="divider"><span>Get Akses</span></div>
+        <div class="divider"><span>belum punya akses?</span></div>
 
-        <a href="https://t.me/HanzzData_bot" target="_blank" rel="noopener" class="get-akses">
+        <a href="https://t.me/XylonWebzBot" target="_blank" rel="noopener" class="get-akses">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 2 2 9.5l6.5 2.2L11 19l3-4 5 3.5L22 2zM9.7 13.4l8.4-7.7-9.9 6.7-.1 3.3.6-.6 1-1.7z"/></svg>
           Get Akses
         </a>
@@ -643,21 +790,33 @@
     </div>
     <p class="reward-caption" id="reward-caption">ACCESS GRANTED</p>
 
-    <div class="music-player" id="music-player">
-      <button type="button" class="play-btn" id="play-btn" aria-label="Play musik">
-        <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-      </button>
-      <div class="eq-bars"><span></span><span></span><span></span></div>
-      <span class="music-label">XylonWebz OST</span>
+    <div class="music-dock" id="music-dock">
+      <div class="now-playing" id="now-playing">
+        <img class="np-artwork" id="np-artwork" src="" alt="" />
+        <div class="np-info">
+          <div class="np-title" id="np-title">—</div>
+          <div class="np-artist" id="np-artist">—</div>
+        </div>
+        <div class="eq-bars"><span></span><span></span><span></span></div>
+        <button type="button" class="play-btn" id="play-btn" aria-label="Play/pause musik">
+          <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+        </button>
+      </div>
+
+      <div class="search-wrap">
+        <div class="search-results" id="search-results"></div>
+        <div class="search-bar" id="search-bar">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          <input type="text" id="search-input" autocomplete="off" placeholder="Cari lagu..." />
+          <div class="search-spinner" id="search-spinner" hidden></div>
+        </div>
+      </div>
     </div>
 
     <button type="button" class="back-btn" id="back-btn">← Balik ke Login</button>
 
-    <!-- GANTI link di bawah ini sama link mp3 langsung (misal dari catbox.moe) -->
-    <audio id="bg-audio" loop preload="none">
-      <source src="https://files.catbox.moe/qeqnpo.mp3" type="audio/mpeg" />
-    </audio>
+    <audio id="bg-audio" loop preload="none"></audio>
   </div>
 
   <script>
@@ -674,7 +833,15 @@
     const rewardScreen = document.getElementById('reward-screen');
     const rewardPhotoWrap = document.getElementById('reward-photo-wrap');
     const rewardCaption = document.getElementById('reward-caption');
-    const musicPlayer = document.getElementById('music-player');
+    const musicDock = document.getElementById('music-dock');
+    const nowPlaying = document.getElementById('now-playing');
+    const npArtwork = document.getElementById('np-artwork');
+    const npTitle = document.getElementById('np-title');
+    const npArtist = document.getElementById('np-artist');
+    const searchBar = document.getElementById('search-bar');
+    const searchInput = document.getElementById('search-input');
+    const searchSpinner = document.getElementById('search-spinner');
+    const searchResults = document.getElementById('search-results');
     const playBtn = document.getElementById('play-btn');
     const bgAudio = document.getElementById('bg-audio');
     const backBtn = document.getElementById('back-btn');
@@ -746,31 +913,116 @@
 
           setTimeout(() => rewardPhotoWrap.classList.add('show'), 100);
           setTimeout(() => rewardCaption.classList.add('show'), 500);
-          setTimeout(() => musicPlayer.classList.add('show'), 800);
+          setTimeout(() => musicDock.classList.add('show'), 800);
         }, 700);
       }, 900);
     }
 
+    let searchDebounce;
+
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchDebounce);
+      const q = searchInput.value.trim();
+
+      if (!q) {
+        searchResults.classList.remove('show');
+        searchBar.classList.remove('lifted');
+        return;
+      }
+
+      searchDebounce = setTimeout(() => runSearch(q), 450);
+    });
+
+    async function runSearch(q) {
+      searchSpinner.hidden = false;
+      try {
+        const res = await fetch(`/api/search-song?q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+        renderResults(data.results || []);
+      } catch (err) {
+        renderResults([]);
+      } finally {
+        searchSpinner.hidden = true;
+      }
+    }
+
+    function renderResults(results) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="search-empty">Lagu gak ketemu 🙁</div>';
+      } else {
+        results.forEach((song) => {
+          const row = document.createElement('div');
+          row.className = 'search-result-row';
+          row.innerHTML = `
+            <img src="${song.artwork}" alt="" />
+            <div class="search-result-info">
+              <div class="search-result-title">${song.title}</div>
+              <div class="search-result-artist">${song.artist}</div>
+            </div>
+          `;
+          row.addEventListener('click', () => selectSong(song));
+          searchResults.appendChild(row);
+        });
+      }
+
+      searchResults.classList.add('show');
+      searchBar.classList.add('lifted');
+    }
+
+    function selectSong(song) {
+      npArtwork.src = song.artwork;
+      npTitle.textContent = song.title;
+      npArtist.textContent = song.artist;
+
+      bgAudio.src = song.preview;
+      bgAudio.currentTime = 0;
+      bgAudio.play().catch(() => {});
+      playBtn.classList.add('playing');
+      nowPlaying.classList.add('playing');
+      nowPlaying.classList.add('show');
+
+      searchResults.classList.remove('show');
+      searchBar.classList.remove('lifted');
+      searchInput.value = '';
+      searchInput.blur();
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!musicDock.contains(e.target)) {
+        searchResults.classList.remove('show');
+        searchBar.classList.remove('lifted');
+      }
+    });
+
     playBtn.addEventListener('click', () => {
+      if (!bgAudio.src) return;
       if (bgAudio.paused) {
         bgAudio.play().catch(() => {});
         playBtn.classList.add('playing');
-        musicPlayer.classList.add('playing');
+        nowPlaying.classList.add('playing');
       } else {
         bgAudio.pause();
         playBtn.classList.remove('playing');
-        musicPlayer.classList.remove('playing');
+        nowPlaying.classList.remove('playing');
       }
     });
 
     backBtn.addEventListener('click', () => {
       bgAudio.pause();
+      bgAudio.removeAttribute('src');
       playBtn.classList.remove('playing');
-      musicPlayer.classList.remove('playing');
+      nowPlaying.classList.remove('playing');
+      nowPlaying.classList.remove('show');
+      searchInput.value = '';
+      searchResults.classList.remove('show');
+      searchResults.innerHTML = '';
+      searchBar.classList.remove('lifted');
       rewardScreen.classList.remove('show');
       rewardPhotoWrap.classList.remove('show');
       rewardCaption.classList.remove('show');
-      musicPlayer.classList.remove('show');
+      musicDock.classList.remove('show');
       page.classList.remove('hide');
       loginBtnText.textContent = 'Login';
       loginBtn.disabled = false;
