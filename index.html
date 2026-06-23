@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,1063 +8,1380 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --bg: #0a0c12;
-    --surface: #12151f;
-    --surface-2: #181c2a;
-    --border: #232838;
-    --text: #e9eaf3;
-    --muted: #868ca3;
-    --violet: #7c3aed;
-    --cyan: #06b6d4;
-    --pink: #ec4899;
-    --success: #34d399;
-    --danger: #fb7185;
-    --warning: #fbbf24;
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
+/* ===== VARIABEL ROOT ===== */
+:root {
+  --bg: #0a0c12;
+  --surface: #12151f;
+  --surface-2: #181c2a;
+  --border: #232838;
+  --text: #e9eaf3;
+  --muted: #868ca3;
+  --violet: #7c3aed;
+  --cyan: #06b6d4;
+  --pink: #ec4899;
+  --success: #34d399;
+  --danger: #fb7185;
+  --warning: #fbbf24;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  * { box-sizing: border-box; }
+  /* Liquid Glass (dari file style.css) */
+  --bg-color: #e5e5ea;
+  --blob-1: #ff2a5f;
+  --blob-2: #007aff;
+  --blob-3: #ff9500;
+  --blob-opacity: 0.7;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --glass-caustic: rgba(255, 255, 255, 0.4);
+  --reflection-start: rgba(255, 255, 255, 0.6);
+  --reflection-end: rgba(255, 255, 255, 0.0);
+  --glare-color: rgba(255, 255, 255, 0.5);
+  --pill-bg: rgba(255, 255, 255, 0.7);
+  --pill-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8);
+  --icon-color: rgba(0, 0, 0, 0.5);
+  --icon-active: rgba(0, 0, 0, 0.95);
+  --divider: rgba(0, 0, 0, 0.15);
+}
 
-  html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    overflow-x: hidden;
-  }
+[data-theme="dark"] {
+  --bg: #000000;
+  --surface: #12151f;
+  --surface-2: #1a1e2a;
+  --border: #2a2f3f;
+  --text: #f0f0f5;
+  --muted: #888fa0;
 
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 24px;
-  }
+  --bg-color: #000000;
+  --blob-1: #bf5af2;
+  --blob-2: #0a84ff;
+  --blob-3: #ff375f;
+  --blob-opacity: 0.5;
+  --glass-bg: rgba(30, 30, 35, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: rgba(0, 0, 0, 0.8);
+  --glass-highlight: rgba(255, 255, 255, 0.25);
+  --glass-caustic: rgba(255, 255, 255, 0.05);
+  --reflection-start: rgba(255, 255, 255, 0.15);
+  --reflection-end: rgba(255, 255, 255, 0.0);
+  --glare-color: rgba(255, 255, 255, 0.15);
+  --pill-bg: rgba(60, 60, 65, 0.8);
+  --pill-shadow: 0 4px 12px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.2);
+  --icon-color: rgba(255, 255, 255, 0.5);
+  --icon-active: #ffffff;
+  --divider: rgba(255, 255, 255, 0.15);
+}
 
-  /* ---------- Ambient background ---------- */
-  .grid-overlay {
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ===== RESET & GLOBAL ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  transition: background 0.6s ease;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+}
 
-  .bg-glow {
-    position: fixed;
-    width: 480px;
-    height: 480px;
-    border-radius: 50%;
-    filter: blur(110px);
-    opacity: 0.28;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .bg-glow-1 { background: var(--violet); top: -120px; left: -120px; animation: drift1 14s ease-in-out infinite; }
-  .bg-glow-2 { background: var(--cyan); bottom: -140px; right: -100px; animation: drift2 16s ease-in-out infinite; }
+/* ===== BACKGROUND BLOBS (dari style.css) ===== */
+.bg-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: var(--bg-color);
+  transition: background 0.8s ease;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: var(--blob-opacity);
+  animation: float 20s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  will-change: transform;
+  transition: background 0.8s ease, opacity 0.8s ease;
+}
+.blob-1 { width: 50vw; height: 50vw; top: -10%; left: -10%; background: var(--blob-1); animation-delay: 0s; }
+.blob-2 { width: 45vw; height: 45vw; bottom: -10%; right: -10%; background: var(--blob-2); animation-delay: -5s; }
+.blob-3 { width: 35vw; height: 35vw; top: 30%; left: 40%; background: var(--blob-3); animation-delay: -10s; }
 
-  @keyframes drift1 {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(60px, 40px); }
-  }
-  @keyframes drift2 {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-50px, -30px); }
-  }
+@keyframes float {
+  0% { transform: translate(0,0) scale(1) rotate(0deg); }
+  33% { transform: translate(5%,10%) scale(1.05) rotate(5deg); }
+  66% { transform: translate(-5%,5%) scale(0.95) rotate(-5deg); }
+  100% { transform: translate(0,-10%) scale(1.1) rotate(0deg); }
+}
 
-  /* ---------- Layout ---------- */
-  .page {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
+/* ===== GRID OVERLAY (dari HTML pertama) ===== */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
 
-  .page.hide {
-    opacity: 0;
-    transform: scale(0.96);
-    pointer-events: none;
-  }
+/* ===== LAYOUT UTAMA ===== */
+.page {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.page.hide {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
 
-  .brand { text-align: center; margin-bottom: 28px; }
+.brand { text-align: center; margin-bottom: 28px; }
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 42px;
+  margin: 0;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan), var(--pink), var(--violet));
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 6s linear infinite;
+}
+@keyframes gradientShift { to { background-position: -300% center; } }
+.brand-tag { margin: 6px 0 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; color: var(--muted); }
 
-  .brand-title {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 42px;
-    margin: 0;
-    letter-spacing: -0.5px;
-    background: linear-gradient(90deg, var(--violet), var(--cyan), var(--pink), var(--violet));
-    background-size: 300% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: gradientShift 6s linear infinite;
-  }
+/* ===== CARD LOGIN ===== */
+@property --angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.card-wrapper {
+  width: 100%;
+  padding: 1.5px;
+  border-radius: 22px;
+  background: conic-gradient(from var(--angle), var(--violet), var(--cyan), var(--pink), var(--violet));
+  animation: rotateBorder 5s linear infinite;
+}
+@keyframes rotateBorder { to { --angle: 360deg; } }
 
-  @keyframes gradientShift {
-    to { background-position: -300% center; }
-  }
+.card {
+  background: var(--surface);
+  border-radius: 20.5px;
+  padding: 32px 28px;
+  transition: transform 0.18s ease;
+}
+.card.shake { animation: shake 0.4s ease; }
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(3px); }
+}
 
-  .brand-tag {
-    margin: 6px 0 0;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--muted);
-  }
+.card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 1.5px;
+  color: var(--success);
+  margin-bottom: 18px;
+}
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 0 rgba(52,211,153,0.6);
+  animation: pulseDot 2s ease-out infinite;
+}
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 0 rgba(52,211,153,0.5); }
+  70% { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+  100% { box-shadow: 0 0 0 0 rgba(52,211,153,0); }
+}
+.card-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin: 0 0 22px; }
 
-  /* ---------- Card with rotating gradient border ---------- */
-  @property --angle {
-    syntax: '<angle>';
-    inherits: false;
-    initial-value: 0deg;
-  }
+.field { display: block; margin-bottom: 16px; }
+.field-label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 7px; }
+.field-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 0 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field-input:focus-within { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(6,182,212,0.12); }
+.field-input svg { flex-shrink: 0; color: var(--muted); }
+.field-input input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  padding: 12px 0;
+}
+.field-input input::placeholder { color: #565c70; }
+.icon-btn {
+  background: none; border: none;
+  color: var(--muted); cursor: pointer;
+  display: flex; align-items: center; padding: 4px;
+}
+.icon-btn:hover { color: var(--text); }
 
-  .card-wrapper {
-    width: 100%;
-    padding: 1.5px;
-    border-radius: 22px;
-    background: conic-gradient(from var(--angle), var(--violet), var(--cyan), var(--pink), var(--violet));
-    animation: rotateBorder 5s linear infinite;
-  }
+.btn-primary {
+  width: 100%;
+  border: none;
+  border-radius: 11px;
+  padding: 13px;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: #0a0c12;
+  background: linear-gradient(90deg, var(--cyan), var(--violet));
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease, filter 0.15s ease;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-  @keyframes rotateBorder {
-    to { --angle: 360deg; }
-  }
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 16px;
+  color: var(--muted);
+  font-size: 11.5px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.get-akses {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.get-akses:hover { border-color: var(--cyan); background: #1b2030; }
+.get-akses svg { color: #2aabee; flex-shrink: 0; }
+.footer-text { margin-top: 22px; font-size: 11px; color: #565c70; text-align: center; }
 
-  .card {
-    background: var(--surface);
-    border-radius: 20.5px;
-    padding: 32px 28px;
-    transition: transform 0.18s ease;
-  }
+/* ===== NOTIFICATION ===== */
+#notif-container {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 50;
+  pointer-events: none;
+}
+.notif {
+  pointer-events: auto;
+  margin-top: 14px;
+  width: min(94%, 380px);
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  background: rgba(28,30,38,0.78);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  transform: translateY(-130%);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.34,1.2,0.4,1), opacity 0.35s ease;
+}
+.notif.show { transform: translateY(0); opacity: 1; }
+.notif.hide { transform: translateY(-130%); opacity: 0; }
+.notif-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.notif-error .notif-icon { background: var(--danger); }
+.notif-warning .notif-icon { background: var(--warning); }
+.notif-success .notif-icon { background: var(--success); }
+.notif-text { flex: 1; }
+.notif-title { font-size: 13.5px; font-weight: 600; color: #fff; line-height: 1.3; }
+.notif-message { font-size: 12.5px; color: rgba(255,255,255,0.7); line-height: 1.35; margin-top: 2px; }
 
-  .card.shake {
-    animation: shake 0.4s ease;
-  }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-8px); }
-    40% { transform: translateX(7px); }
-    60% { transform: translateX(-5px); }
-    80% { transform: translateX(3px); }
-  }
+/* ===== GLITCH ===== */
+.glitch-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch-overlay.run { animation: glitchFlicker 0.7s steps(2,end); }
+@keyframes glitchFlicker {
+  0% { opacity: 1; } 10% { opacity: 0; } 18% { opacity: 1; } 28% { opacity: 0.15; }
+  38% { opacity: 1; } 50% { opacity: 0; } 62% { opacity: 0.8; }
+  72% { opacity: 0; } 85% { opacity: 0.4; } 100% { opacity: 0; }
+}
+.glitch-bar {
+  position: fixed;
+  left: 0; width: 100%; height: 3px;
+  z-index: 111;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+.glitch-bar.run { animation: glitchBar 0.7s steps(1,end); }
+.glitch-bar:nth-child(1) { top: 18%; background: var(--cyan); animation-delay: 0.05s; }
+.glitch-bar:nth-child(2) { top: 42%; background: var(--pink); animation-delay: 0.15s; height: 5px; }
+.glitch-bar:nth-child(3) { top: 67%; background: var(--violet); animation-delay: 0.3s; }
+.glitch-bar:nth-child(4) { top: 80%; background: var(--cyan); animation-delay: 0.45s; height: 2px; }
+@keyframes glitchBar {
+  0% { opacity: 0; transform: translateX(0); }
+  10% { opacity: 1; transform: translateX(-40px); }
+  20% { opacity: 0; transform: translateX(30px); }
+  30% { opacity: 1; transform: translateX(-15px); }
+  40% { opacity: 0; }
+  100% { opacity: 0; }
+}
 
-  .card-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    letter-spacing: 1.5px;
-    color: var(--success);
-    margin-bottom: 18px;
-  }
+/* ===== REWARD SCREEN ===== */
+.reward-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 30%, #0d1b3e 0%, #050813 55%, #000000 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.reward-screen.show { opacity: 1; pointer-events: auto; }
 
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--success);
-    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
-    animation: pulseDot 2s ease-out infinite;
-  }
-  @keyframes pulseDot {
-    0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
-    70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
-  }
+.reward-photo-wrap {
+  width: min(86vw, 320px);
+  aspect-ratio: 1;
+  border-radius: 20px;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.9);
+  filter: blur(10px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22,1,0.36,1), filter 0.8s ease;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 60px rgba(6,182,212,0.25);
+}
+.reward-photo-wrap.show { opacity: 1; transform: scale(1); filter: blur(0); }
+.reward-photo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .card-title {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 22px;
-    margin: 0 0 22px;
-  }
+.reward-caption {
+  margin-top: 18px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  text-align: center;
+  background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 6s linear infinite;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reward-caption.show { opacity: 1; transform: translateY(0); }
 
-  /* ---------- Form ---------- */
-  .field {
-    display: block;
-    margin-bottom: 16px;
-  }
+/* ===== MUSIC DOCK ===== */
+.music-dock {
+  width: 100%;
+  max-width: 340px;
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.music-dock.show { opacity: 1; transform: translateY(0); }
 
-  .field-label {
-    display: block;
-    font-size: 12.5px;
-    color: var(--muted);
-    margin-bottom: 7px;
-  }
+.now-playing {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 0px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(16px);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 14px;
+  transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.45s ease, border-width 0.3s ease;
+}
+.now-playing.show { max-height: 70px; opacity: 1; padding: 9px 14px; border-width: 1px; }
+.np-artwork { width: 40px; height: 40px; border-radius: 9px; object-fit: cover; flex-shrink: 0; background: var(--surface-2); }
+.np-info { flex: 1; min-width: 0; }
+.np-title { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np-artist { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+.play-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: #05060a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.play-btn svg { width: 15px; height: 15px; }
+.play-btn .pause-icon { display: none; }
+.play-btn.playing .play-icon { display: none; }
+.play-btn.playing .pause-icon { display: block; }
 
-  .field-input {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    padding: 0 12px;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
+.eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.eq-bars span {
+  width: 3px;
+  background: var(--cyan);
+  border-radius: 2px;
+  height: 4px;
+  animation: eqBounce 0.9s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.eq-bars span:nth-child(2) { background: var(--violet); animation-delay: 0.15s; }
+.eq-bars span:nth-child(3) { background: var(--pink); animation-delay: 0.3s; }
+.now-playing.playing .eq-bars span { animation-play-state: running; }
+@keyframes eqBounce {
+  0%,100% { height: 4px; }
+  50% { height: 16px; }
+}
 
-  .field-input:focus-within {
-    border-color: var(--cyan);
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
-  }
+.search-wrap { position: relative; }
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(16px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.search-bar.lifted { transform: translateY(-6px); box-shadow: 0 14px 34px rgba(0,0,0,0.35); }
+.search-bar svg { color: var(--muted); flex-shrink: 0; }
+.search-bar input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+.search-bar input::placeholder { color: #5d637a; }
+.search-spinner {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  border-top-color: var(--cyan);
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-  .field-input svg { flex-shrink: 0; color: var(--muted); }
+.search-results {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0; right: 0;
+  max-height: 230px;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: rgba(15,17,26,0.94);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 5;
+}
+.search-results.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.search-result-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.search-result-row:hover, .search-result-row:active { background: rgba(255,255,255,0.06); }
+.search-result-row img {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--surface-2);
+}
+.search-result-info { flex: 1; min-width: 0; }
+.search-result-title { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-result-artist { font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-empty { padding: 14px; font-size: 11.5px; color: var(--muted); text-align: center; }
 
-  .field-input input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    outline: none;
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 14px;
-    padding: 12px 0;
-  }
+.back-btn {
+  margin-top: 28px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.back-btn:hover { color: var(--text); }
 
-  .field-input input::placeholder { color: #565c70; }
+/* ===== LIQUID GLASS NAVIGATION (dari style.css) ===== */
+.liquid-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 99px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(50px) saturate(200%);
+  -webkit-backdrop-filter: blur(50px) saturate(200%);
+  box-shadow:
+    0 40px 80px -20px var(--glass-shadow),
+    0 10px 30px -10px var(--glass-shadow),
+    inset 0 2px 3px -1px var(--glass-highlight),
+    inset 0 -2px 4px -1px var(--glass-caustic),
+    inset 0 0 0 1px var(--glass-border);
+  transition: all 0.5s ease;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease, all 0.5s ease;
+}
+.liquid-nav.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.liquid-nav::before {
+  content: '';
+  position: absolute;
+  top: 1px; left: 1px; right: 1px;
+  height: 46%;
+  border-radius: 99px 99px 24px 24px / 99px 99px 12px 12px;
+  background: linear-gradient(180deg, var(--reflection-start) 0%, var(--reflection-end) 100%);
+  pointer-events: none;
+  z-index: 6;
+  transition: background 0.5s ease;
+}
+.liquid-glare-container {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+.liquid-glare {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(circle 90px at var(--x, 50%) var(--y, 50%), var(--glare-color) 0%, transparent 100%);
+  mix-blend-mode: overlay;
+}
+.liquid-nav:hover .liquid-glare { opacity: 1; }
 
-  .icon-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    padding: 4px;
-  }
-  .icon-btn:hover { color: var(--text); }
+.nav-items {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  z-index: 3;
+  flex-wrap: nowrap;
+}
+.active-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 44px;
+  background: var(--pill-bg);
+  border-radius: 99px;
+  box-shadow: var(--pill-shadow);
+  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+              width 0.5s cubic-bezier(0.34, 1.2, 0.64, 1),
+              background 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1;
+}
+.nav-btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 0 16px;
+  height: 44px;
+  border-radius: 99px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--icon-color);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.3s ease;
+  outline: none;
+  z-index: 2;
+}
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.nav-btn:active .btn-content { transform: scale(0.92); }
+.nav-btn.active { color: var(--icon-active); }
 
-  .btn-primary {
-    width: 100%;
-    border: none;
-    border-radius: 11px;
-    padding: 13px;
-    margin-top: 6px;
-    font-family: var(--font-body);
-    font-weight: 600;
-    font-size: 14.5px;
-    color: #0a0c12;
-    background: linear-gradient(90deg, var(--cyan), var(--violet));
-    cursor: pointer;
-    transition: transform 0.12s ease, opacity 0.12s ease, filter 0.15s ease;
-  }
-  .btn-primary:hover { filter: brightness(1.08); }
-  .btn-primary:active { transform: scale(0.98); }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--divider);
+  margin: 0 4px;
+  z-index: 3;
+  transition: background 0.5s ease;
+}
+.theme-btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--icon-color);
+  cursor: pointer;
+  z-index: 3;
+  outline: none;
+  margin-left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+.theme-btn:hover, .theme-btn:active { color: var(--icon-active); }
+.theme-icon-wrapper {
+  position: relative;
+  width: 20px; height: 20px;
+  pointer-events: none;
+  transition: transform 0.2s cubic-bezier(0.32,0.72,0,1);
+}
+.theme-btn:active .theme-icon-wrapper { transform: scale(0.8); }
+.theme-icon-wrapper svg {
+  position: absolute;
+  top: 0; left: 0;
+  transition: transform 0.5s cubic-bezier(0.34,1.2,0.64,1), opacity 0.4s ease;
+  stroke-width: 2.2;
+}
+.sun { opacity: 1; transform: rotate(0deg) scale(1); }
+.moon { opacity: 0; transform: rotate(-90deg) scale(0); }
+[data-theme="dark"] .sun { opacity: 0; transform: rotate(90deg) scale(0); }
+[data-theme="dark"] .moon { opacity: 1; transform: rotate(0deg) scale(1); }
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 22px 0 16px;
-    color: var(--muted);
-    font-size: 11.5px;
-  }
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+/* ===== KONTEN UTAMA (Home / Music / List) ===== */
+.main-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 24px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.main-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-  .get-akses {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    padding: 11px;
-    border-radius: 11px;
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    color: var(--text);
-    text-decoration: none;
-    font-size: 13.5px;
-    font-weight: 500;
-    transition: border-color 0.15s ease, background 0.15s ease;
-  }
-  .get-akses:hover {
-    border-color: var(--cyan);
-    background: #1b2030;
-  }
-  .get-akses svg { color: #2aabee; flex-shrink: 0; }
+.content-panel {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 16px;
+  animation: fadeSlide 0.4s ease;
+}
+.content-panel.active { display: flex; }
 
-  .footer-text {
-    margin-top: 22px;
-    font-size: 11px;
-    color: #565c70;
-    text-align: center;
-  }
+@keyframes fadeSlide {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-  /* ---------- iOS style notification ---------- */
-  #notif-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    z-index: 50;
-    pointer-events: none;
-  }
+/* ===== OBENG ANIMASI ===== */
+.wrench-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 30px 20px;
+}
+.wrench-icon {
+  font-size: 64px;
+  display: inline-block;
+  animation: wrenchSpin 2s ease-in-out infinite;
+}
+@keyframes wrenchSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(15deg) scale(1.1); }
+  50% { transform: rotate(-10deg) scale(0.95); }
+  75% { transform: rotate(10deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+.wrench-text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+.wrench-sub {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+}
+.wrench-sparks {
+  display: flex;
+  gap: 6px;
+  font-size: 20px;
+  animation: sparkFade 1.2s ease-in-out infinite;
+}
+@keyframes sparkFade {
+  0%,100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
 
-  .notif {
-    pointer-events: auto;
-    margin-top: 14px;
-    width: min(94%, 380px);
-    display: flex;
-    gap: 11px;
-    align-items: flex-start;
-    background: rgba(28, 30, 38, 0.78);
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 12px 14px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    transform: translateY(-130%);
-    opacity: 0;
-    transition: transform 0.45s cubic-bezier(0.34, 1.2, 0.4, 1), opacity 0.35s ease;
-  }
-  .notif.show { transform: translateY(0); opacity: 1; }
-  .notif.hide { transform: translateY(-130%); opacity: 0; }
-
-  .notif-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .notif-error .notif-icon { background: var(--danger); }
-  .notif-warning .notif-icon { background: var(--warning); }
-  .notif-success .notif-icon { background: var(--success); }
-
-  .notif-text { flex: 1; }
-  .notif-title {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #fff;
-    line-height: 1.3;
-  }
-  .notif-message {
-    font-size: 12.5px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.35;
-    margin-top: 2px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .bg-glow, .brand-title, .card-wrapper, .status-dot, .card.shake { animation: none !important; }
-    .notif { transition: none !important; }
-  }
-
-  @media (max-width: 420px) {
-    .brand-title { font-size: 34px; }
-    .card { padding: 26px 20px; }
-  }
-
-  /* ---------- Glitch transition ---------- */
-  .glitch-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 110;
-    background: #000;
-    opacity: 0;
-    pointer-events: none;
-  }
-  .glitch-overlay.run {
-    animation: glitchFlicker 0.7s steps(2, end);
-  }
-  @keyframes glitchFlicker {
-    0% { opacity: 1; }
-    10% { opacity: 0; }
-    18% { opacity: 1; }
-    28% { opacity: 0.15; }
-    38% { opacity: 1; }
-    50% { opacity: 0; }
-    62% { opacity: 0.8; }
-    72% { opacity: 0; }
-    85% { opacity: 0.4; }
-    100% { opacity: 0; }
-  }
-
-  .glitch-bar {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    z-index: 111;
-    pointer-events: none;
-    opacity: 0;
-    mix-blend-mode: screen;
-  }
-  .glitch-bar.run { animation: glitchBar 0.7s steps(1, end); }
-  .glitch-bar:nth-child(1) { top: 18%; background: var(--cyan); animation-delay: 0.05s; }
-  .glitch-bar:nth-child(2) { top: 42%; background: var(--pink); animation-delay: 0.15s; height: 5px; }
-  .glitch-bar:nth-child(3) { top: 67%; background: var(--violet); animation-delay: 0.3s; }
-  .glitch-bar:nth-child(4) { top: 80%; background: var(--cyan); animation-delay: 0.45s; height: 2px; }
-
-  @keyframes glitchBar {
-    0% { opacity: 0; transform: translateX(0); }
-    10% { opacity: 1; transform: translateX(-40px); }
-    20% { opacity: 0; transform: translateX(30px); }
-    30% { opacity: 1; transform: translateX(-15px); }
-    40% { opacity: 0; }
-    100% { opacity: 0; }
-  }
-
-  /* ---------- Reward screen ---------- */
-  .reward-screen {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 24px;
-    background: radial-gradient(ellipse at 50% 30%, #0d1b3e 0%, #050813 55%, #000000 100%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-  }
-  .reward-screen.show { opacity: 1; pointer-events: auto; }
-
-  .reward-photo-wrap {
-    width: min(86vw, 320px);
-    aspect-ratio: 1;
-    border-radius: 20px;
-    overflow: hidden;
-    opacity: 0;
-    transform: scale(0.9);
-    filter: blur(10px);
-    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 20px 60px rgba(6, 182, 212, 0.25);
-  }
-  .reward-photo-wrap.show {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-  .reward-photo-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .reward-caption {
-    margin-top: 18px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 19px;
-    text-align: center;
-    background: linear-gradient(90deg, var(--cyan), var(--violet), var(--pink));
-    background-size: 300% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: gradientShift 6s linear infinite;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .reward-caption.show { opacity: 1; transform: translateY(0); }
-
-  /* ---------- Music search dock ---------- */
-  .music-dock {
-    width: 100%;
-    max-width: 320px;
-    margin-top: 26px;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-    position: relative;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .music-dock.show { opacity: 1; transform: translateY(0); }
-
-  .now-playing {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.05);
-    border: 0px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    padding: 0 14px;
-    transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.45s ease, border-width 0.3s ease;
-  }
-  .now-playing.show {
-    max-height: 70px;
-    opacity: 1;
-    padding: 9px 14px;
-    border-width: 1px;
-  }
-
-  .np-artwork {
-    width: 40px;
-    height: 40px;
-    border-radius: 9px;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: var(--surface-2);
-  }
-
-  .np-info { flex: 1; min-width: 0; }
-  .np-title {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .np-artist {
-    font-size: 11px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 1px;
-  }
-
-  .play-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: linear-gradient(135deg, var(--cyan), var(--violet));
-    color: #05060a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .play-btn svg { width: 15px; height: 15px; }
-  .play-btn .pause-icon { display: none; }
-  .play-btn.playing .play-icon { display: none; }
-  .play-btn.playing .pause-icon { display: block; }
-
-  .eq-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-    height: 16px;
-    flex-shrink: 0;
-  }
-  .eq-bars span {
-    width: 3px;
-    background: var(--cyan);
-    border-radius: 2px;
-    height: 4px;
-    animation: eqBounce 0.9s ease-in-out infinite;
-    animation-play-state: paused;
-  }
-  .eq-bars span:nth-child(2) { background: var(--violet); animation-delay: 0.15s; }
-  .eq-bars span:nth-child(3) { background: var(--pink); animation-delay: 0.3s; }
-  .now-playing.playing .eq-bars span { animation-play-state: running; }
-
-  @keyframes eqBounce {
-    0%, 100% { height: 4px; }
-    50% { height: 16px; }
-  }
-
-  .search-wrap { position: relative; }
-
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .search-bar.lifted {
-    transform: translateY(-6px);
-    box-shadow: 0 14px 34px rgba(0,0,0,0.35);
-  }
-  .search-bar svg { color: var(--muted); flex-shrink: 0; }
-  .search-bar input {
-    flex: 1;
-    min-width: 0;
-    background: none;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-  }
-  .search-bar input::placeholder { color: #5d637a; }
-
-  .search-spinner {
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.15);
-    border-top-color: var(--cyan);
-    animation: spin 0.7s linear infinite;
-    flex-shrink: 0;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .search-results {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    max-height: 230px;
-    overflow-y: auto;
-    border-radius: 16px;
-    background: rgba(15, 17, 26, 0.94);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 5;
-  }
-  .search-results.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .search-result-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-  .search-result-row:hover, .search-result-row:active { background: rgba(255,255,255,0.06); }
-  .search-result-row img {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    object-fit: cover;
-    flex-shrink: 0;
-    background: var(--surface-2);
-  }
-  .search-result-info { flex: 1; min-width: 0; }
-  .search-result-title {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .search-result-artist {
-    font-size: 10.5px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .search-empty {
-    padding: 14px;
-    font-size: 11.5px;
-    color: var(--muted);
-    text-align: center;
-  }
-
-  .back-btn {
-    margin-top: 28px;
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 12.5px;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-  .back-btn:hover { color: var(--text); }
-
-  @media (prefers-reduced-motion: reduce) {
-    .glitch-overlay.run, .glitch-bar.run { animation: none !important; }
-  }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 420px) {
+  .brand-title { font-size: 34px; }
+  .card { padding: 26px 20px; }
+  .nav-btn { padding: 0 12px; font-size: 12px; }
+  .nav-btn .btn-content svg { width: 16px; height: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blob, .brand-title, .card-wrapper, .status-dot, .card.shake,
+  .glitch-overlay.run, .glitch-bar.run, .wrench-icon { animation: none !important; }
+}
 </style>
 </head>
 <body>
 
-  <div class="bg-glow bg-glow-1"></div>
-  <div class="bg-glow bg-glow-2"></div>
-  <div class="grid-overlay"></div>
+<!-- ===== BACKGROUND BLOBS (dari style.css) ===== -->
+<div class="bg-mesh">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+<div class="grid-overlay"></div>
 
-  <div id="notif-container"></div>
+<!-- ===== NOTIFICATION ===== -->
+<div id="notif-container"></div>
 
-  <main class="page">
-    <div class="brand">
-      <h1 class="brand-title">XylonWebz</h1>
-      <p class="brand-tag">SECURE ACCESS TERMINAL</p>
+<!-- ===== GLITCH ===== -->
+<div class="glitch-overlay" id="glitch-overlay"></div>
+<div class="glitch-bar"></div>
+<div class="glitch-bar"></div>
+<div class="glitch-bar"></div>
+<div class="glitch-bar"></div>
+
+<!-- ===== REWARD SCREEN (muncul setelah login) ===== -->
+<div class="reward-screen" id="reward-screen">
+  <div class="reward-photo-wrap" id="reward-photo-wrap">
+    <img src="https://files.catbox.moe/qwmypk.jpg" alt="Access granted" />
+  </div>
+  <p class="reward-caption" id="reward-caption">ACCESS GRANTED</p>
+
+  <!-- MUSIC DOCK (search lagu) -->
+  <div class="music-dock" id="music-dock">
+    <div class="now-playing" id="now-playing">
+      <img class="np-artwork" id="np-artwork" src="" alt="" />
+      <div class="np-info">
+        <div class="np-title" id="np-title">—</div>
+        <div class="np-artist" id="np-artist">—</div>
+      </div>
+      <div class="eq-bars"><span></span><span></span><span></span></div>
+      <button type="button" class="play-btn" id="play-btn" aria-label="Play/pause musik">
+        <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      </button>
     </div>
-
-    <div class="card-wrapper">
-      <div class="card" id="card">
-        <div class="card-status">
-          <span class="status-dot"></span>SYSTEM ONLINE
-        </div>
-
-        <h2 class="card-title">Login</h2>
-
-        <form id="login-form" novalidate>
-          <label class="field">
-            <span class="field-label">Username</span>
-            <div class="field-input">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-              <input type="text" id="username" autocomplete="off" placeholder="Masukin username" required />
-            </div>
-          </label>
-
-          <label class="field">
-            <span class="field-label">Password / Key</span>
-            <div class="field-input">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              <input type="password" id="password" autocomplete="off" placeholder="Masukin password" required />
-              <button type="button" id="toggle-pass" class="icon-btn" aria-label="Tampilkan password">
-                <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-              </button>
-            </div>
-          </label>
-
-          <button type="submit" class="btn-primary" id="login-btn">
-            <span id="login-btn-text">Login</span>
-          </button>
-        </form>
-
-        <div class="divider"><span>belum punya akses?</span></div>
-
-        <a href="https://t.me/XylonWebzBot" target="_blank" rel="noopener" class="get-akses">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 2 2 9.5l6.5 2.2L11 19l3-4 5 3.5L22 2zM9.7 13.4l8.4-7.7-9.9 6.7-.1 3.3.6-.6 1-1.7z"/></svg>
-          Get Akses
-        </a>
+    <div class="search-wrap">
+      <div class="search-results" id="search-results"></div>
+      <div class="search-bar" id="search-bar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="search-input" autocomplete="off" placeholder="Cari lagu..." />
+        <div class="search-spinner" id="search-spinner" hidden></div>
       </div>
     </div>
-
-    <p class="footer-text">XylonWebz © 2026 — key diverifikasi langsung via Telegram</p>
-  </main>
-
-  <div class="glitch-overlay" id="glitch-overlay"></div>
-  <div class="glitch-bar"></div>
-  <div class="glitch-bar"></div>
-  <div class="glitch-bar"></div>
-  <div class="glitch-bar"></div>
-
-  <div class="reward-screen" id="reward-screen">
-    <div class="reward-photo-wrap" id="reward-photo-wrap">
-      <img src="https://files.catbox.moe/qwmypk.jpg" alt="Access granted" />
-    </div>
-    <p class="reward-caption" id="reward-caption">ACCESS GRANTED</p>
-
-    <div class="music-dock" id="music-dock">
-      <div class="now-playing" id="now-playing">
-        <img class="np-artwork" id="np-artwork" src="" alt="" />
-        <div class="np-info">
-          <div class="np-title" id="np-title">—</div>
-          <div class="np-artist" id="np-artist">—</div>
-        </div>
-        <div class="eq-bars"><span></span><span></span><span></span></div>
-        <button type="button" class="play-btn" id="play-btn" aria-label="Play/pause musik">
-          <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-        </button>
-      </div>
-
-      <div class="search-wrap">
-        <div class="search-results" id="search-results"></div>
-        <div class="search-bar" id="search-bar">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-          <input type="text" id="search-input" autocomplete="off" placeholder="Cari lagu..." />
-          <div class="search-spinner" id="search-spinner" hidden></div>
-        </div>
-      </div>
-    </div>
-
-    <button type="button" class="back-btn" id="back-btn">← Balik ke Login</button>
-
-    <audio id="bg-audio" loop preload="none"></audio>
   </div>
 
-  <script>
-    const form = document.getElementById('login-form');
-    const card = document.getElementById('card');
-    const loginBtn = document.getElementById('login-btn');
-    const loginBtnText = document.getElementById('login-btn-text');
-    const togglePass = document.getElementById('toggle-pass');
-    const passwordInput = document.getElementById('password');
-    const notifContainer = document.getElementById('notif-container');
-    const page = document.querySelector('.page');
-    const glitchOverlay = document.getElementById('glitch-overlay');
-    const glitchBars = document.querySelectorAll('.glitch-bar');
-    const rewardScreen = document.getElementById('reward-screen');
-    const rewardPhotoWrap = document.getElementById('reward-photo-wrap');
-    const rewardCaption = document.getElementById('reward-caption');
-    const musicDock = document.getElementById('music-dock');
-    const nowPlaying = document.getElementById('now-playing');
-    const npArtwork = document.getElementById('np-artwork');
-    const npTitle = document.getElementById('np-title');
-    const npArtist = document.getElementById('np-artist');
-    const searchBar = document.getElementById('search-bar');
-    const searchInput = document.getElementById('search-input');
-    const searchSpinner = document.getElementById('search-spinner');
-    const searchResults = document.getElementById('search-results');
-    const playBtn = document.getElementById('play-btn');
-    const bgAudio = document.getElementById('bg-audio');
-    const backBtn = document.getElementById('back-btn');
+  <!-- ===== LIQUID GLASS NAVIGATION ===== -->
+  <nav class="liquid-nav" id="nav">
+    <div class="liquid-glare-container">
+      <div class="liquid-glare" id="glare"></div>
+    </div>
+    <div class="nav-items">
+      <div class="active-pill" id="active-pill"></div>
+      <button class="nav-btn active" data-tab="home">
+        <div class="btn-content">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Home</span>
+        </div>
+      </button>
+      <button class="nav-btn" data-tab="music">
+        <div class="btn-content">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+          <span>Music</span>
+        </div>
+      </button>
+      <button class="nav-btn" data-tab="list">
+        <div class="btn-content">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+          <span>List</span>
+        </div>
+      </button>
+    </div>
+    <div class="nav-divider"></div>
+    <button class="theme-btn" id="theme-btn" aria-label="Dark Mode Toggle">
+      <div class="theme-icon-wrapper">
+        <svg class="sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </div>
+    </button>
+  </nav>
 
-    const COOLDOWN_MS = 5000;
+  <!-- ===== KONTEN UTAMA (Home / Music / List) ===== -->
+  <div class="main-content" id="main-content">
+    <!-- HOME -->
+    <div class="content-panel active" id="panel-home">
+      <div class="wrench-container">
+        <span class="wrench-icon">🔧</span>
+        <div class="wrench-text">On Maintenance</div>
+        <div class="wrench-sub">Kami sedang memperbaiki beberapa hal</div>
+        <div class="wrench-sparks">
+          <span>⚡</span>
+          <span>✨</span>
+          <span>⚡</span>
+        </div>
+      </div>
+    </div>
 
-    const icons = {
-      error: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
-      warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>',
-      success: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
-    };
+    <!-- MUSIC -->
+    <div class="content-panel" id="panel-music">
+      <!-- Isi dari music-dock sudah di atas, tapi kita duplikat di sini biar konsisten -->
+      <div style="width:100%; max-width:340px; display:flex; flex-direction:column; gap:12px; padding: 10px 0;">
+        <div style="text-align:center; font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--text);">
+          🎵 Music Player
+        </div>
+        <!-- Di sini sebenarnya kita pake music-dock yang sudah ada di atas -->
+        <!-- Tapi karena music-dock sudah di luar, kita tampilkan ulang dengan referensi -->
+        <div style="display:flex; justify-content:center;">
+          <img src="https://files.catbox.moe/qwmypk.jpg" style="width:120px; height:120px; border-radius:16px; object-fit:cover; box-shadow:0 8px 30px rgba(0,0,0,0.3);" />
+        </div>
+        <div style="text-align:center; color:var(--muted); font-size:13px;">
+          Pilih lagu dari pencarian di bawah
+        </div>
+      </div>
+    </div>
 
-    function showNotification(title, message, type) {
-      const existing = notifContainer.querySelector('.notif');
-      if (existing) existing.remove();
+    <!-- LIST -->
+    <div class="content-panel" id="panel-list">
+      <div class="wrench-container">
+        <span class="wrench-icon">🔧</span>
+        <div class="wrench-text">On Maintenance</div>
+        <div class="wrench-sub">Fitur ini sedang dalam pengembangan</div>
+        <div class="wrench-sparks">
+          <span>⚡</span>
+          <span>🔨</span>
+          <span>⚡</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      const notif = document.createElement('div');
-      notif.className = `notif notif-${type}`;
-      notif.innerHTML = `
-        <div class="notif-icon">${icons[type]}</div>
-        <div class="notif-text">
-          <div class="notif-title">${title}</div>
-          <div class="notif-message">${message}</div>
+  <button type="button" class="back-btn" id="back-btn">← Balik ke Login</button>
+
+  <audio id="bg-audio" loop preload="none"></audio>
+</div>
+
+<!-- ===== HALAMAN LOGIN (awal) ===== -->
+<main class="page" id="login-page">
+  <div class="brand">
+    <h1 class="brand-title">XylonWebz</h1>
+    <p class="brand-tag">SECURE ACCESS TERMINAL</p>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="card" id="card">
+      <div class="card-status">
+        <span class="status-dot"></span>SYSTEM ONLINE
+      </div>
+      <h2 class="card-title">Login</h2>
+      <form id="login-form" novalidate>
+        <label class="field">
+          <span class="field-label">Username</span>
+          <div class="field-input">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" id="username" autocomplete="off" placeholder="Masukin username" required />
+          </div>
+        </label>
+        <label class="field">
+          <span class="field-label">Password / Key</span>
+          <div class="field-input">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="password" autocomplete="off" placeholder="Masukin password" required />
+            <button type="button" id="toggle-pass" class="icon-btn" aria-label="Tampilkan password">
+              <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </label>
+        <button type="submit" class="btn-primary" id="login-btn">
+          <span id="login-btn-text">Login</span>
+        </button>
+      </form>
+      <div class="divider"><span>belum punya akses?</span></div>
+      <a href="https://t.me/XylonWebzBot" target="_blank" rel="noopener" class="get-akses">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 2 2 9.5l6.5 2.2L11 19l3-4 5 3.5L22 2zM9.7 13.4l8.4-7.7-9.9 6.7-.1 3.3.6-.6 1-1.7z"/></svg>
+        Get Akses
+      </a>
+    </div>
+  </div>
+  <p class="footer-text">XylonWebz © 2026 — key diverifikasi langsung via Telegram</p>
+</main>
+
+<script>
+// =============================================
+// 1. LOGIN + NOTIF + GLITCH + REWARD (dari HTML pertama)
+// =============================================
+const form = document.getElementById('login-form');
+const card = document.getElementById('card');
+const loginBtn = document.getElementById('login-btn');
+const loginBtnText = document.getElementById('login-btn-text');
+const togglePass = document.getElementById('toggle-pass');
+const passwordInput = document.getElementById('password');
+const notifContainer = document.getElementById('notif-container');
+const loginPage = document.getElementById('login-page');
+const glitchOverlay = document.getElementById('glitch-overlay');
+const glitchBars = document.querySelectorAll('.glitch-bar');
+const rewardScreen = document.getElementById('reward-screen');
+const rewardPhotoWrap = document.getElementById('reward-photo-wrap');
+const rewardCaption = document.getElementById('reward-caption');
+const musicDock = document.getElementById('music-dock');
+const nowPlaying = document.getElementById('now-playing');
+const npArtwork = document.getElementById('np-artwork');
+const npTitle = document.getElementById('np-title');
+const npArtist = document.getElementById('np-artist');
+const searchBar = document.getElementById('search-bar');
+const searchInput = document.getElementById('search-input');
+const searchSpinner = document.getElementById('search-spinner');
+const searchResults = document.getElementById('search-results');
+const playBtn = document.getElementById('play-btn');
+const bgAudio = document.getElementById('bg-audio');
+const backBtn = document.getElementById('back-btn');
+const nav = document.getElementById('nav');
+const mainContent = document.getElementById('main-content');
+
+const COOLDOWN_MS = 5000;
+const icons = {
+  error: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/></svg>',
+  success: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+};
+
+function showNotification(title, message, type) {
+  const existing = notifContainer.querySelector('.notif');
+  if (existing) existing.remove();
+  const notif = document.createElement('div');
+  notif.className = `notif notif-${type}`;
+  notif.innerHTML = `
+    <div class="notif-icon">${icons[type]}</div>
+    <div class="notif-text">
+      <div class="notif-title">${title}</div>
+      <div class="notif-message">${message}</div>
+    </div>
+  `;
+  notifContainer.appendChild(notif);
+  requestAnimationFrame(() => notif.classList.add('show'));
+  setTimeout(() => {
+    notif.classList.remove('show');
+    notif.classList.add('hide');
+    setTimeout(() => notif.remove(), 400);
+  }, COOLDOWN_MS);
+}
+
+function shakeCard() {
+  card.classList.remove('shake');
+  void card.offsetWidth;
+  card.classList.add('shake');
+}
+
+function setCooldown() {
+  loginBtn.disabled = true;
+  loginBtnText.textContent = 'Tunggu sebentar...';
+  setTimeout(() => {
+    loginBtn.disabled = false;
+    loginBtnText.textContent = 'Login';
+  }, COOLDOWN_MS);
+}
+
+togglePass.addEventListener('click', () => {
+  passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+});
+
+function unlockReward(username) {
+  rewardCaption.textContent = `WELCOME, ${username.toUpperCase()}`;
+  setTimeout(() => {
+    loginPage.classList.add('hide');
+    glitchOverlay.classList.add('run');
+    glitchBars.forEach((bar) => bar.classList.add('run'));
+    setTimeout(() => {
+      glitchOverlay.classList.remove('run');
+      glitchBars.forEach((bar) => bar.classList.remove('run'));
+      rewardScreen.classList.add('show');
+      setTimeout(() => rewardPhotoWrap.classList.add('show'), 100);
+      setTimeout(() => rewardCaption.classList.add('show'), 500);
+      setTimeout(() => {
+        musicDock.classList.add('show');
+        // Tampilkan nav & main content setelah reward muncul
+        nav.classList.add('show');
+        mainContent.classList.add('show');
+        // Aktifkan tab home secara default
+        activateTab('home');
+      }, 800);
+    }, 700);
+  }, 900);
+}
+
+let searchDebounce;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchDebounce);
+  const q = searchInput.value.trim();
+  if (!q) {
+    searchResults.classList.remove('show');
+    searchBar.classList.remove('lifted');
+    return;
+  }
+  searchDebounce = setTimeout(() => runSearch(q), 450);
+});
+
+async function runSearch(q) {
+  searchSpinner.hidden = false;
+  try {
+    const res = await fetch(`/api/search-song?q=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    renderResults(data.results || []);
+  } catch (err) {
+    renderResults([]);
+  } finally {
+    searchSpinner.hidden = true;
+  }
+}
+
+function renderResults(results) {
+  searchResults.innerHTML = '';
+  if (results.length === 0) {
+    searchResults.innerHTML = '<div class="search-empty">Lagu gak ketemu 🙁</div>';
+  } else {
+    results.forEach((song) => {
+      const row = document.createElement('div');
+      row.className = 'search-result-row';
+      row.innerHTML = `
+        <img src="${song.artwork}" alt="" />
+        <div class="search-result-info">
+          <div class="search-result-title">${song.title}</div>
+          <div class="search-result-artist">${song.artist}</div>
         </div>
       `;
-      notifContainer.appendChild(notif);
-
-      requestAnimationFrame(() => notif.classList.add('show'));
-
-      setTimeout(() => {
-        notif.classList.remove('show');
-        notif.classList.add('hide');
-        setTimeout(() => notif.remove(), 400);
-      }, COOLDOWN_MS);
-    }
-
-    function shakeCard() {
-      card.classList.remove('shake');
-      void card.offsetWidth; // reset animation
-      card.classList.add('shake');
-    }
-
-    function setCooldown() {
-      loginBtn.disabled = true;
-      loginBtnText.textContent = 'Tunggu sebentar...';
-      setTimeout(() => {
-        loginBtn.disabled = false;
-        loginBtnText.textContent = 'Login';
-      }, COOLDOWN_MS);
-    }
-
-    togglePass.addEventListener('click', () => {
-      const isHidden = passwordInput.type === 'password';
-      passwordInput.type = isHidden ? 'text' : 'password';
+      row.addEventListener('click', () => selectSong(song));
+      searchResults.appendChild(row);
     });
+  }
+  searchResults.classList.add('show');
+  searchBar.classList.add('lifted');
+}
 
-    function unlockReward(username) {
-      rewardCaption.textContent = `WELCOME, ${username.toUpperCase()}`;
+function selectSong(song) {
+  npArtwork.src = song.artwork;
+  npTitle.textContent = song.title;
+  npArtist.textContent = song.artist;
+  bgAudio.src = song.preview;
+  bgAudio.currentTime = 0;
+  bgAudio.play().catch(() => {});
+  playBtn.classList.add('playing');
+  nowPlaying.classList.add('playing');
+  nowPlaying.classList.add('show');
+  searchResults.classList.remove('show');
+  searchBar.classList.remove('lifted');
+  searchInput.value = '';
+  searchInput.blur();
+}
 
-      setTimeout(() => {
-        page.classList.add('hide');
-        glitchOverlay.classList.add('run');
-        glitchBars.forEach((bar) => bar.classList.add('run'));
+document.addEventListener('click', (e) => {
+  if (!musicDock.contains(e.target)) {
+    searchResults.classList.remove('show');
+    searchBar.classList.remove('lifted');
+  }
+});
 
-        setTimeout(() => {
-          glitchOverlay.classList.remove('run');
-          glitchBars.forEach((bar) => bar.classList.remove('run'));
-          rewardScreen.classList.add('show');
+playBtn.addEventListener('click', () => {
+  if (!bgAudio.src) return;
+  if (bgAudio.paused) {
+    bgAudio.play().catch(() => {});
+    playBtn.classList.add('playing');
+    nowPlaying.classList.add('playing');
+  } else {
+    bgAudio.pause();
+    playBtn.classList.remove('playing');
+    nowPlaying.classList.remove('playing');
+  }
+});
 
-          setTimeout(() => rewardPhotoWrap.classList.add('show'), 100);
-          setTimeout(() => rewardCaption.classList.add('show'), 500);
-          setTimeout(() => musicDock.classList.add('show'), 800);
-        }, 700);
-      }, 900);
+backBtn.addEventListener('click', () => {
+  bgAudio.pause();
+  bgAudio.removeAttribute('src');
+  playBtn.classList.remove('playing');
+  nowPlaying.classList.remove('playing');
+  nowPlaying.classList.remove('show');
+  searchInput.value = '';
+  searchResults.classList.remove('show');
+  searchResults.innerHTML = '';
+  searchBar.classList.remove('lifted');
+  rewardScreen.classList.remove('show');
+  rewardPhotoWrap.classList.remove('show');
+  rewardCaption.classList.remove('show');
+  musicDock.classList.remove('show');
+  nav.classList.remove('show');
+  mainContent.classList.remove('show');
+  loginPage.classList.remove('hide');
+  loginBtnText.textContent = 'Login';
+  loginBtn.disabled = false;
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (loginBtn.disabled) return;
+  const username = document.getElementById('username').value.trim();
+  const password = passwordInput.value;
+  loginBtn.disabled = true;
+  loginBtnText.textContent = 'Mengecek...';
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    if (data.status === 'success') {
+      showNotification('Berhasil!', `Welcome ${data.username}`, 'success');
+      unlockReward(data.username);
+    } else if (data.status === 'expired') {
+      showNotification('Masa Telah Habis!', 'Tekan Get Akses Untuk Mendapatkan Key Baru', 'warning');
+      shakeCard();
+      setCooldown();
+    } else {
+      showNotification('Salah!', 'Username/Password Mungkin Salah', 'error');
+      shakeCard();
+      setCooldown();
     }
+  } catch (err) {
+    showNotification('Salah!', 'Username/Password Mungkin Salah', 'error');
+    shakeCard();
+    setCooldown();
+  }
+});
 
-    let searchDebounce;
+// =============================================
+// 2. LIQUID GLASS NAVIGATION (dari script.js)
+// =============================================
+const navButtons = document.querySelectorAll('.nav-btn');
+const activePill = document.getElementById('active-pill');
+const themeBtn = document.getElementById('theme-btn');
+const glare = document.getElementById('glare');
 
-    searchInput.addEventListener('input', () => {
-      clearTimeout(searchDebounce);
-      const q = searchInput.value.trim();
+function updatePill(btn, smooth = true) {
+  if (!btn) return;
+  activePill.style.transition = smooth
+    ? "transform .5s cubic-bezier(.34,1.2,.64,1), width .5s cubic-bezier(.34,1.2,.64,1)"
+    : "none";
+  activePill.style.width = `${btn.offsetWidth}px`;
+  activePill.style.transform = `translateX(${btn.offsetLeft}px)`;
+}
 
-      if (!q) {
-        searchResults.classList.remove('show');
-        searchBar.classList.remove('lifted');
-        return;
-      }
+function activateTab(tabId) {
+  // Update active button
+  navButtons.forEach(b => b.classList.remove('active'));
+  const targetBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
+  if (targetBtn) targetBtn.classList.add('active');
 
-      searchDebounce = setTimeout(() => runSearch(q), 450);
-    });
+  // Update pill
+  if (targetBtn) updatePill(targetBtn);
 
-    async function runSearch(q) {
-      searchSpinner.hidden = false;
-      try {
-        const res = await fetch(`/api/search-song?q=${encodeURIComponent(q)}`);
-        const data = await res.json();
-        renderResults(data.results || []);
-      } catch (err) {
-        renderResults([]);
-      } finally {
-        searchSpinner.hidden = true;
-      }
-    }
+  // Update content panels
+  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById(`panel-${tabId}`);
+  if (panel) panel.classList.add('active');
+}
 
-    function renderResults(results) {
-      searchResults.innerHTML = '';
+// Inisialisasi pill saat pertama kali
+setTimeout(() => {
+  const initialActive = document.querySelector('.nav-btn.active');
+  if (initialActive) updatePill(initialActive, false);
+}, 100);
 
-      if (results.length === 0) {
-        searchResults.innerHTML = '<div class="search-empty">Lagu gak ketemu 🙁</div>';
-      } else {
-        results.forEach((song) => {
-          const row = document.createElement('div');
-          row.className = 'search-result-row';
-          row.innerHTML = `
-            <img src="${song.artwork}" alt="" />
-            <div class="search-result-info">
-              <div class="search-result-title">${song.title}</div>
-              <div class="search-result-artist">${song.artist}</div>
-            </div>
-          `;
-          row.addEventListener('click', () => selectSong(song));
-          searchResults.appendChild(row);
-        });
-      }
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    activateTab(tab);
+  });
+});
 
-      searchResults.classList.add('show');
-      searchBar.classList.add('lifted');
-    }
+// Dark mode toggle
+themeBtn.addEventListener('click', () => {
+  const root = document.documentElement;
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  // Update pill position after theme change (font size may shift)
+  setTimeout(() => {
+    const active = document.querySelector('.nav-btn.active');
+    if (active) updatePill(active);
+  }, 150);
+});
 
-    function selectSong(song) {
-      npArtwork.src = song.artwork;
-      npTitle.textContent = song.title;
-      npArtist.textContent = song.artist;
+// Resize handler
+window.addEventListener('resize', () => {
+  const active = document.querySelector('.nav-btn.active');
+  if (active) updatePill(active, false);
+});
 
-      bgAudio.src = song.preview;
-      bgAudio.currentTime = 0;
-      bgAudio.play().catch(() => {});
-      playBtn.classList.add('playing');
-      nowPlaying.classList.add('playing');
-      nowPlaying.classList.add('show');
+// Glare effect
+nav.addEventListener('mousemove', e => {
+  const rect = nav.getBoundingClientRect();
+  glare.style.setProperty('--x', `${e.clientX - rect.left}px`);
+  glare.style.setProperty('--y', `${e.clientY - rect.top}px`);
+});
 
-      searchResults.classList.remove('show');
-      searchBar.classList.remove('lifted');
-      searchInput.value = '';
-      searchInput.blur();
-    }
+// =============================================
+// 3. PERBAIKAN: Music panel menggunakan music-dock yang sudah ada
+// =============================================
+// Saat tab Music di-klik, kita pastikan music-dock tetap terlihat
+// Tapi karena music-dock ada di luar main-content, kita biarkan saja.
+// Kita tambahkan event untuk menyembunyikan/menampilkan dock sesuai tab
+const originalActivate = activateTab;
+activateTab = function(tabId) {
+  originalActivate(tabId);
+  // Sembunyikan music-dock jika bukan tab music
+  if (tabId === 'music') {
+    musicDock.style.display = 'flex';
+  } else {
+    musicDock.style.display = 'none';
+  }
+};
+// Override untuk inisialisasi
+setTimeout(() => {
+  activateTab('home');
+}, 200);
 
-    document.addEventListener('click', (e) => {
-      if (!musicDock.contains(e.target)) {
-        searchResults.classList.remove('show');
-        searchBar.classList.remove('lifted');
-      }
-    });
+// Pastikan musicDock tetap muncul saat tab music
+document.querySelector('.nav-btn[data-tab="music"]')?.addEventListener('click', () => {
+  musicDock.style.display = 'flex';
+});
 
-    playBtn.addEventListener('click', () => {
-      if (!bgAudio.src) return;
-      if (bgAudio.paused) {
-        bgAudio.play().catch(() => {});
-        playBtn.classList.add('playing');
-        nowPlaying.classList.add('playing');
-      } else {
-        bgAudio.pause();
-        playBtn.classList.remove('playing');
-        nowPlaying.classList.remove('playing');
-      }
-    });
-
-    backBtn.addEventListener('click', () => {
-      bgAudio.pause();
-      bgAudio.removeAttribute('src');
-      playBtn.classList.remove('playing');
-      nowPlaying.classList.remove('playing');
-      nowPlaying.classList.remove('show');
-      searchInput.value = '';
-      searchResults.classList.remove('show');
-      searchResults.innerHTML = '';
-      searchBar.classList.remove('lifted');
-      rewardScreen.classList.remove('show');
-      rewardPhotoWrap.classList.remove('show');
-      rewardCaption.classList.remove('show');
-      musicDock.classList.remove('show');
-      page.classList.remove('hide');
-      loginBtnText.textContent = 'Login';
-      loginBtn.disabled = false;
-    });
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (loginBtn.disabled) return;
-
-      const username = document.getElementById('username').value.trim();
-      const password = passwordInput.value;
-
-      loginBtn.disabled = true;
-      loginBtnText.textContent = 'Mengecek...';
-
-      try {
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
-        });
-        const data = await res.json();
-
-        if (data.status === 'success') {
-          showNotification('Berhasil!', `Welcome ${data.username}`, 'success');
-          unlockReward(data.username);
-        } else if (data.status === 'expired') {
-          showNotification('Masa Telah Habis!', 'Tekan Get Akses Untuk Mendapatkan Key Baru', 'warning');
-          shakeCard();
-          setCooldown();
-        } else {
-          showNotification('Salah!', 'Username/Password Mungkin Salah', 'error');
-          shakeCard();
-          setCooldown();
-        }
-      } catch (err) {
-        showNotification('Salah!', 'Username/Password Mungkin Salah', 'error');
-        shakeCard();
-        setCooldown();
-      }
-    });
-  </script>
+// =============================================
+// 4. PERBAIKAN: Pastikan semua panel tampil dengan benar
+// =============================================
+// Jalankan activateTab saat semuanya dimuat
+document.addEventListener('DOMContentLoaded', () => {
+  // Set default tab
+  setTimeout(() => activateTab('home'), 300);
+});
+</script>
 
 </body>
-</html>
+  </html>
