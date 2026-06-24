@@ -801,6 +801,32 @@ body {
   animation: gradientShift 6s linear infinite;
 }
 
+/* ===== MUSIC PANEL - foto besar di pojok kanan atas ===== */
+.music-panel-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px 12px;
+  gap: 12px;
+}
+
+.music-big-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.music-search-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* ===== OBENG ANIMASI ===== */
 .wrench-container {
   display: flex;
@@ -853,6 +879,7 @@ body {
   .nav-btn .btn-content svg { width: 16px; height: 16px; }
   .profile-avatar { width: 48px; height: 48px; }
   .welcome-text { font-size: 15px; }
+  .music-big-photo { width: 120px; height: 120px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .blob, .brand-title, .card-wrapper, .status-dot, .card.shake,
@@ -862,7 +889,7 @@ body {
 </head>
 <body>
 
-<!-- ===== BACKGROUND BLOBS (dari style.css) ===== -->
+<!-- ===== BACKGROUND BLOBS ===== -->
 <div class="bg-mesh">
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
@@ -880,14 +907,63 @@ body {
 <div class="glitch-bar"></div>
 <div class="glitch-bar"></div>
 
-<!-- ===== REWARD SCREEN (muncul setelah login) ===== -->
+<!-- ===== REWARD SCREEN ===== -->
 <div class="reward-screen" id="reward-screen">
   <div class="reward-photo-wrap" id="reward-photo-wrap">
     <img src="https://files.catbox.moe/qwmypk.jpg" alt="Access granted" />
   </div>
   <p class="reward-caption" id="reward-caption">ACCESS GRANTED</p>
 
-  <!-- MUSIC DOCK (search lagu) -->
+  <!-- ===== KONTEN UTAMA ===== -->
+  <div class="main-content" id="main-content">
+    <!-- HOME -->
+    <div class="content-panel active" id="panel-home">
+      <div class="welcome-header">
+        <img src="https://files.catbox.moe/qwmypk.jpg" alt="Profile" class="profile-avatar" />
+        <div class="welcome-text" id="welcome-text-home">WELCOME, LYOVIS</div>
+      </div>
+      <div class="wrench-container">
+        <span class="wrench-icon">🔧</span>
+        <div class="wrench-text">On Maintenance</div>
+        <div class="wrench-sub">Kami sedang memperbaiki beberapa hal</div>
+        <div class="wrench-sparks">
+          <span>⚡</span>
+          <span>✨</span>
+          <span>⚡</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MUSIC -->
+    <div class="content-panel" id="panel-music">
+      <div class="music-panel-wrapper">
+        <img src="https://files.catbox.moe/oc3e62.jpg" alt="Music" class="music-big-photo" />
+        <div class="music-search-wrapper">
+          <!-- Search bar akan diisi oleh music-dock yang sudah ada di bawah -->
+        </div>
+      </div>
+    </div>
+
+    <!-- LIST -->
+    <div class="content-panel" id="panel-list">
+      <div class="welcome-header">
+        <img src="https://files.catbox.moe/qwmypk.jpg" alt="Profile" class="profile-avatar" />
+        <div class="welcome-text" id="welcome-text-list">WELCOME, LYOVIS</div>
+      </div>
+      <div class="wrench-container">
+        <span class="wrench-icon">🔧</span>
+        <div class="wrench-text">On Maintenance</div>
+        <div class="wrench-sub">Fitur ini sedang dalam pengembangan</div>
+        <div class="wrench-sparks">
+          <span>⚡</span>
+          <span>🔨</span>
+          <span>⚡</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MUSIC DOCK (search lagu) ===== -->
   <div class="music-dock" id="music-dock">
     <div class="now-playing" id="now-playing">
       <img class="np-artwork" id="np-artwork" src="" alt="" />
@@ -911,7 +987,7 @@ body {
     </div>
   </div>
 
-  <!-- ===== LIQUID GLASS NAVIGATION ===== -->
+  <!-- ===== LIQUID GLASS NAVIGATION (di bawah) ===== -->
   <nav class="liquid-nav" id="nav">
     <div class="liquid-glare-container">
       <div class="liquid-glare" id="glare"></div>
@@ -972,66 +1048,12 @@ body {
     </button>
   </nav>
 
-  <!-- ===== KONTEN UTAMA (Home / Music / List) ===== -->
-  <div class="main-content" id="main-content">
-    <!-- HOME -->
-    <div class="content-panel active" id="panel-home">
-      <div class="welcome-header">
-        <img src="https://files.catbox.moe/qwmypk.jpg" alt="Profile" class="profile-avatar" />
-        <div class="welcome-text" id="welcome-text-home">WELCOME, LYOVIS</div>
-      </div>
-      <div class="wrench-container">
-        <span class="wrench-icon">🔧</span>
-        <div class="wrench-text">On Maintenance</div>
-        <div class="wrench-sub">Kami sedang memperbaiki beberapa hal</div>
-        <div class="wrench-sparks">
-          <span>⚡</span>
-          <span>✨</span>
-          <span>⚡</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- MUSIC -->
-    <div class="content-panel" id="panel-music">
-      <div style="width:100%; max-width:340px; display:flex; flex-direction:column; gap:12px; padding: 10px 0;">
-        <div style="text-align:center; font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--text);">
-          🎵 Music Player
-        </div>
-        <div style="display:flex; justify-content:center;">
-          <img src="https://files.catbox.moe/oc3e62.jpg" style="width:120px; height:120px; border-radius:16px; object-fit:cover; box-shadow:0 8px 30px rgba(0,0,0,0.3);" />
-        </div>
-        <div style="text-align:center; color:var(--muted); font-size:13px;">
-          Pilih lagu dari pencarian di bawah
-        </div>
-      </div>
-    </div>
-
-    <!-- LIST -->
-    <div class="content-panel" id="panel-list">
-      <div class="welcome-header">
-        <img src="https://files.catbox.moe/qwmypk.jpg" alt="Profile" class="profile-avatar" />
-        <div class="welcome-text" id="welcome-text-list">WELCOME, LYOVIS</div>
-      </div>
-      <div class="wrench-container">
-        <span class="wrench-icon">🔧</span>
-        <div class="wrench-text">On Maintenance</div>
-        <div class="wrench-sub">Fitur ini sedang dalam pengembangan</div>
-        <div class="wrench-sparks">
-          <span>⚡</span>
-          <span>🔨</span>
-          <span>⚡</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <button type="button" class="back-btn" id="back-btn">← Balik ke Login</button>
 
   <audio id="bg-audio" loop preload="none"></audio>
 </div>
 
-<!-- ===== HALAMAN LOGIN (awal) ===== -->
+<!-- ===== HALAMAN LOGIN ===== -->
 <main class="page" id="login-page">
   <div class="brand">
     <h1 class="brand-title">XylonWebz</h1>
@@ -1078,7 +1100,7 @@ body {
 
 <script>
 // =============================================
-// 1. LOGIN + NOTIF + GLITCH + REWARD (dari HTML pertama)
+// 1. LOGIN + NOTIF + GLITCH + REWARD
 // =============================================
 const form = document.getElementById('login-form');
 const card = document.getElementById('card');
@@ -1161,7 +1183,6 @@ function unlockReward(username) {
   currentUsername = username.toUpperCase();
   rewardCaption.textContent = `WELCOME, ${currentUsername}`;
   
-  // Update welcome text di Home & List
   document.getElementById('welcome-text-home').textContent = `WELCOME, ${currentUsername}`;
   document.getElementById('welcome-text-list').textContent = `WELCOME, ${currentUsername}`;
   
@@ -1177,10 +1198,8 @@ function unlockReward(username) {
       setTimeout(() => rewardCaption.classList.add('show'), 500);
       setTimeout(() => {
         musicDock.classList.add('show');
-        // Tampilkan nav & main content setelah reward muncul
         nav.classList.add('show');
         mainContent.classList.add('show');
-        // Aktifkan tab home secara default
         activateTab('home');
       }, 800);
     }, 700);
@@ -1326,7 +1345,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 // =============================================
-// 2. LIQUID GLASS NAVIGATION (dari script.js)
+// 2. LIQUID GLASS NAVIGATION
 // =============================================
 const navButtons = document.querySelectorAll('.nav-btn');
 const activePill = document.getElementById('active-pill');
@@ -1343,21 +1362,16 @@ function updatePill(btn, smooth = true) {
 }
 
 function activateTab(tabId) {
-  // Update active button
   navButtons.forEach(b => b.classList.remove('active'));
   const targetBtn = document.querySelector(`.nav-btn[data-tab="${tabId}"]`);
   if (targetBtn) targetBtn.classList.add('active');
-
-  // Update pill
   if (targetBtn) updatePill(targetBtn);
 
-  // Update content panels
   document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById(`panel-${tabId}`);
   if (panel) panel.classList.add('active');
 }
 
-// Inisialisasi pill saat pertama kali
 setTimeout(() => {
   const initialActive = document.querySelector('.nav-btn.active');
   if (initialActive) updatePill(initialActive, false);
@@ -1370,25 +1384,21 @@ navButtons.forEach(btn => {
   });
 });
 
-// Dark mode toggle
 themeBtn.addEventListener('click', () => {
   const root = document.documentElement;
   const isDark = root.getAttribute('data-theme') === 'dark';
   root.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  // Update pill position after theme change (font size may shift)
   setTimeout(() => {
     const active = document.querySelector('.nav-btn.active');
     if (active) updatePill(active);
   }, 150);
 });
 
-// Resize handler
 window.addEventListener('resize', () => {
   const active = document.querySelector('.nav-btn.active');
   if (active) updatePill(active, false);
 });
 
-// Glare effect
 nav.addEventListener('mousemove', e => {
   const rect = nav.getBoundingClientRect();
   glare.style.setProperty('--x', `${e.clientX - rect.left}px`);
@@ -1396,40 +1406,30 @@ nav.addEventListener('mousemove', e => {
 });
 
 // =============================================
-// 3. PERBAIKAN: Music panel menggunakan music-dock yang sudah ada
+// 3. MUSIC TAB - sembunyikan music-dock jika bukan music
 // =============================================
-// Saat tab Music di-klik, kita pastikan music-dock tetap terlihat
-// Tapi karena music-dock ada di luar main-content, kita biarkan saja.
-// Kita tambahkan event untuk menyembunyikan/menampilkan dock sesuai tab
 const originalActivate = activateTab;
 activateTab = function(tabId) {
   originalActivate(tabId);
-  // Sembunyikan music-dock jika bukan tab music
   if (tabId === 'music') {
     musicDock.style.display = 'flex';
   } else {
     musicDock.style.display = 'none';
   }
 };
-// Override untuk inisialisasi
+
 setTimeout(() => {
   activateTab('home');
 }, 200);
 
-// Pastikan musicDock tetap muncul saat tab music
 document.querySelector('.nav-btn[data-tab="music"]')?.addEventListener('click', () => {
   musicDock.style.display = 'flex';
 });
 
-// =============================================
-// 4. PERBAIKAN: Pastikan semua panel tampil dengan benar
-// =============================================
-// Jalankan activateTab saat semuanya dimuat
 document.addEventListener('DOMContentLoaded', () => {
-  // Set default tab
   setTimeout(() => activateTab('home'), 300);
 });
 </script>
 
 </body>
-            </html>
+</html>
